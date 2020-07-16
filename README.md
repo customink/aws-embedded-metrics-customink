@@ -2,6 +2,8 @@
 
 ⚠️ Bare minimum code to explore [Amazon CloudWatch Embedded Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format.html) with Ruby. Any and all help welcome to raise the quality of our implementation.
 
+[Enhancing workload observability using Amazon CloudWatch Embedded Metric Format](https://awsfeed.com/whats-new/management-tools/enhancing-workload-observability-using-amazon-cloudwatch-embedded-metric-format)
+
 #### Inspiration
 
 Pulled from these two projects using the [Embedded Metric Format Specification](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Manual.html) as a reference guide.
