@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/customink/aws-embedded-metrics-customink'
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
-  spec.metadata['allowed_push_host'] = 'http://mygemserver.com'
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/customink/aws-embedded-metrics-customink'
   spec.metadata['changelog_uri'] = 'https://github.com/customink/aws-embedded-metrics-customink/blob/master/CHANGELOG.md'
