@@ -41,7 +41,7 @@ Using the `Logger` sink to write to a log file:
 
 ```ruby
 Aws::Embedded::Metrics.configure do |c|
-  c.sink = Aws::Embedded::Metrics::Sinks::Logger.new(Rails.logger, level: :info)
+  c.sink = Aws::Embedded::Metrics::Sinks::Logger.new(Rails.logger)
 end
 ```
 
