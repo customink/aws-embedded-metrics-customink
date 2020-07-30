@@ -8,7 +8,7 @@ module Aws
 
           def initialize(logger, level: :info)
             @logger = logger
-            @level = level
+            @level = level.to_sym
           end
 
           def accept(message)
