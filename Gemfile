@@ -1,8 +1,9 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 gemspec
 
-gem 'rake'
 gem 'minitest'
+gem 'rake'
+gem 'rubocop'
 
 group :test do
   gem 'mocha'

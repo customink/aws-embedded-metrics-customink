@@ -18,7 +18,7 @@ module Aws
           @config ||= Configuration.new
         end
 
-        extend self
+        module_function :configure, :reconfigure, :config
 
         class Configuration
 

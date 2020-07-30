@@ -27,9 +27,9 @@ module Aws
         end
 
         def put_metric(name, value, unit = nil)
-          @metrics << { 'Name' => name }.tap { |m|
+          @metrics << { 'Name' => name }.tap do |m|
             m['Unit'] = unit if unit
-          }
+          end
           set_property name, value
         end
 
@@ -39,7 +39,7 @@ module Aws
         end
 
         def empty?
-          [@dimensions, @metrics, @properties].all? { |x| x.empty? }
+          [@dimensions, @metrics, @properties].all?(&:empty?)
         end
 
         def message
