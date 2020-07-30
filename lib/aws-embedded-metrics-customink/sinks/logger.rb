@@ -6,7 +6,7 @@ module Aws
 
           attr_reader :logger, :level
 
-          def initialize(logger, level: 'info')
+          def initialize(logger, level: :info)
             @logger = logger
             @level = level
           end
