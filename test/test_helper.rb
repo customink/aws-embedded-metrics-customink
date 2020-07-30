@@ -8,18 +8,15 @@ require 'minitest/autorun'
 class TestCase < MiniTest::Spec
 
   before do
-    reconfigure
-    setup_test_sink
+    configure
   end
 
   private
 
-  def reconfigure
-    Aws::Embedded::Metrics.reconfigure
-  end
-
-  def setup_test_sink
-    Aws::Embedded::Metrics.stubs sink: test_sink
+  def configure
+    Aws::Embedded::Metrics.reconfigure do |c|
+      c.sink = test_sink
+    end
   end
 
   def test_sink

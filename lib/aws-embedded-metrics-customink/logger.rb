@@ -3,8 +3,8 @@ module Aws
     module Metrics
       class Logger
 
-        def initialize(sink = Sinks::Lambda)
-          @sink = sink.new
+        def initialize(sink = Config.config.sink)
+          @sink = sink
           @namespace = Config.config.namespace
           @dimensions = []
           @metrics = []
@@ -18,7 +18,7 @@ module Aws
         end
 
         def flush
-          Metrics.sink.accept(message) unless empty?
+          @sink.accept(message) unless empty?
         end
 
         def put_dimension(name, value)

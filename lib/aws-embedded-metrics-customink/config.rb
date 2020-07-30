@@ -3,6 +3,8 @@ module Aws
     module Metrics
       module Config
 
+        DEFAULT_SINK = Sinks::Stdout
+
         def configure
           yield(config)
           config
@@ -20,7 +22,7 @@ module Aws
 
         class Configuration
 
-          attr_writer :namespace
+          attr_writer :namespace, :sink
 
           def reconfigure
             instance_variables.each { |var| instance_variable_set var, nil }
@@ -30,7 +32,12 @@ module Aws
 
           def namespace
             return @namespace if defined?(@namespace)
+
             ENV['AWS_EMF_NAMESPACE'] || 'aws-embedded-metrics'
+          end
+
+          def sink
+            @sink ||= DEFAULT_SINK.new
           end
 
         end
