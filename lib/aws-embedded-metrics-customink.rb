@@ -1,13 +1,17 @@
 require 'json'
 require 'benchmark'
 require 'aws-embedded-metrics-customink/version'
-require 'aws-embedded-metrics-customink/config'
 require 'aws-embedded-metrics-customink/sinks'
+require 'aws-embedded-metrics-customink/config'
 require 'aws-embedded-metrics-customink/logger'
 
 module Aws
   module Embedded
     module Metrics
+
+      def config
+        Config.config
+      end
 
       def configure
         Config.configure { |c| yield(c) }
@@ -21,10 +25,6 @@ module Aws
         Logger.new.tap do |l|
           l.metrics { |m| yield(m) } if block_given?
         end
-      end
-
-      def sink
-        @sink ||= Sinks::Lambda.new
       end
 
       extend self

@@ -29,11 +29,19 @@ gem 'aws-embedded-metrics-customink'
 ```
 ## Usage
 
-Simple configuration.
+Simple configuration:
 
 ```ruby
 Aws::Embedded::Metrics.configure do |c|
   c.namespace = 'MyApplication'
+end
+```
+
+Using the `Logger` sink to write to a log file:
+
+```ruby
+Aws::Embedded::Metrics.configure do |c|
+  c.sink = Aws::Embedded::Metrics::Sinks::Logger.new(Rails.logger, level: :info)
 end
 ```
 
