@@ -27,7 +27,7 @@ module Aws
         end
       end
 
-      extend self
+      module_function :config, :configure, :reconfigure, :logger
 
     end
   end
