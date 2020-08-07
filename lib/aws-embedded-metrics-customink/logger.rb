@@ -6,9 +6,9 @@ module Aws
         def initialize(sink = Config.config.sink)
           @sink = sink
           @namespace = Config.config.namespace
-          @dimensions = []
-          @metrics = []
-          @properties = {}
+          @dimensions = Concurrent::Array.new
+          @metrics = Concurrent::Array.new
+          @properties = Concurrent::Hash.new
         end
 
         def metrics
