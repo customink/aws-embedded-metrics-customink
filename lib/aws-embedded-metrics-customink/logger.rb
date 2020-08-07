@@ -21,6 +21,13 @@ module Aws
           @sink.accept(message) unless empty?
         end
 
+        def benchmark
+          value = nil
+          seconds = Benchmark.realtime { value = yield }
+          milliseconds = (seconds * 1000).to_i
+          [value, milliseconds]
+        end
+
         def put_dimension(name, value)
           @dimensions << { name => value }
           self

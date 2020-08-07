@@ -3,6 +3,12 @@
 
 See this http://keepachangelog.com link for information on how we want this documented formatted.
 
+## v0.3.0
+
+### Added
+
+- New `benchmark` helper.
+
 ## v0.2.0
 
 ### Changed
