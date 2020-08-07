@@ -3,6 +3,12 @@
 
 See this http://keepachangelog.com link for information on how we want this documented formatted.
 
+## v0.4.0
+
+### Changed
+
+- Use Concurrent Ruby for Logger data.
+
 ## v0.3.0
 
 ### Added

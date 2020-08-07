@@ -1,5 +1,7 @@
 require 'json'
 require 'benchmark'
+require 'concurrent/array'
+require 'concurrent/hash'
 require 'aws-embedded-metrics-customink/version'
 require 'aws-embedded-metrics-customink/sinks'
 require 'aws-embedded-metrics-customink/config'
