@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    aws-embedded-metrics-customink (0.4.0)
+    aws-embedded-metrics-customink (0.5.0)
 
 GEM
   remote: https://rubygems.org/

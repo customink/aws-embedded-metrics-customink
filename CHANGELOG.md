@@ -3,6 +3,12 @@
 
 See this http://keepachangelog.com link for information on how we want this documented formatted.
 
+## v0.5.0
+
+### Added
+
+- Simple singleton/delegator for metrics instance in Rails.
+
 ## v0.4.0
 
 ### Changed

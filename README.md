@@ -56,6 +56,38 @@ Aws::Embedded::Metrics.logger do |metrics|
 end
 ```
 
+## Using Rails?
+
+And want to instrument metrics deep in your code during the request/response lifecycle? Consider creating a PORO like this `Metrics` example.
+
+```ruby
+class MyMetrics < Aws::Embedded::Metrics::Instance
+end
+```
+
+This object is ready to use as a per-request singleton that acts as a simple delegator to all metrics/logger methods. A great way to hook it up for your application is in ApplicationController.
+
+```ruby
+class ApplicationController < ActionController::Base
+  around_action :embedded_metrics
+  private
+  def embedded_metrics
+    Aws::Embedded::Metrics.logger do |metrics|
+      MyMetrics.instance = MyMetrics.new(metrics)
+      yield
+    end
+  end
+end
+```
+
+Now you can happily instrument your code.
+
+```ruby
+proof, time = MyMetrics.benchmark { @imagebuilder.data }
+MyMetrics.put_metric 'ImageBuilderTime', time, 'Milliseconds'
+MyMetrics.set_property 'ImageId', params[:image_id]
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

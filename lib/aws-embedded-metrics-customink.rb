@@ -6,6 +6,7 @@ require 'aws-embedded-metrics-customink/version'
 require 'aws-embedded-metrics-customink/sinks'
 require 'aws-embedded-metrics-customink/config'
 require 'aws-embedded-metrics-customink/logger'
+require 'aws-embedded-metrics-customink/instance' if defined?(Rails)
 
 module Aws
   module Embedded
