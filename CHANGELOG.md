@@ -3,6 +3,12 @@
 
 See this http://keepachangelog.com link for information on how we want this documented formatted.
 
+## v0.6.0
+
+### Fixed
+
+- Moved concurrent-ruby to runtime dep.
+
 ## v0.5.0
 
 ### Added
