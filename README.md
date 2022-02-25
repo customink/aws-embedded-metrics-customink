@@ -29,6 +29,11 @@ gem 'aws-embedded-metrics-customink'
 ```
 ## Usage
 
+If using outside of Rails, require the gem:
+```ruby
+require 'aws-embedded-metrics-customink'
+```
+
 Simple configuration:
 
 ```ruby
