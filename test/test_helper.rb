@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require 'bundler' ; Bundler.require :default, :development, :test
 require 'aws-embedded-metrics-customink'
 require_relative 'test_helper/test_sink.rb'
+require_relative 'test_helper/test_tcp_sink_server.rb'
 require 'minitest/spec'
 require 'minitest/autorun'
 
