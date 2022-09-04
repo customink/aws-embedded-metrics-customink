@@ -54,21 +54,22 @@ module Aws
         end
 
         def message
-          cw_metrics = {
-            'Namespace' => @namespace,
-            'Dimensions' => [@dimensions.map(&:keys).flatten],
-            'Metrics' => @metrics
+          aws = {
+            'Timestamp' => timestamp,
+            'CloudWatchMetrics' => [{
+              'Namespace' => @namespace,
+              'Dimensions' => [@dimensions.map(&:keys).flatten],
+              'Metrics' => @metrics
+            }]
           }
-          cw_metrics['LogGroupName'] = @log_group_name if @log_group_name
-          cw_metrics['LogStreamName'] = @log_stream_name if @log_stream_name
-          cw_metrics['ServiceName'] = @service_name if @service_name
-          cw_metrics['ServiceType'] = @service_type if @service_type
+
+          aws['LogGroupName'] = @log_group_name if @log_group_name
+          aws['LogStreamName'] = @log_stream_name if @log_stream_name
+          aws['ServiceName'] = @service_name if @service_name
+          aws['ServiceType'] = @service_type if @service_type
 
           {
-            '_aws' => {
-              'Timestamp' => timestamp,
-              'CloudWatchMetrics' => [cw_metrics]
-            }
+            '_aws' => aws
           }.tap do |m|
             @dimensions.each { |dim| m.merge!(dim) }
             m.merge!(@properties)
