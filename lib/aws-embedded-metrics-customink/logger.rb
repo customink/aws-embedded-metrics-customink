@@ -5,7 +5,11 @@ module Aws
 
         def initialize(sink = Config.config.sink)
           @sink = sink
+          @log_group_name = Config.config.log_group_name
+          @log_stream_name = Config.config.log_stream_name
           @namespace = Config.config.namespace
+          @service_name = Config.config.service_name
+          @service_type = Config.config.service_type
           @dimensions = Concurrent::Array.new
           @metrics = Concurrent::Array.new
           @properties = Concurrent::Hash.new
@@ -50,16 +54,20 @@ module Aws
         end
 
         def message
+          cw_metrics = {
+            'Namespace' => @namespace,
+            'Dimensions' => [@dimensions.map(&:keys).flatten],
+            'Metrics' => @metrics
+          }
+          cw_metrics['LogGroupName'] = @log_group_name if @log_group_name
+          cw_metrics['LogStreamName'] = @log_stream_name if @log_stream_name
+          cw_metrics['ServiceName'] = @service_name if @service_name
+          cw_metrics['ServiceType'] = @service_type if @service_type
+
           {
             '_aws' => {
               'Timestamp' => timestamp,
-              'CloudWatchMetrics' => [
-                {
-                  'Namespace' => @namespace,
-                  'Dimensions' => [@dimensions.map(&:keys).flatten],
-                  'Metrics' => @metrics
-                }
-              ]
+              'CloudWatchMetrics' => [cw_metrics]
             }
           }.tap do |m|
             @dimensions.each { |dim| m.merge!(dim) }

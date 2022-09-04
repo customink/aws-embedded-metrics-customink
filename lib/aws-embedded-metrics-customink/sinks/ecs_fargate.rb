@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'socket'
 require 'tcp-client'
 
 module Aws
@@ -19,18 +18,21 @@ module Aws
           attr_reader :queue
 
           #
-          # Create a new Fargate sink. It will use the `AWS_EMF_AGENT_ENDPOINT` environment variable by default to
+          # Create a new Fargate sink. It will use the +AWS_EMF_AGENT_ENDPOINT+ environment variable by default to
           # connect to a CloudWatch Metric Agent side-car container.
           # This was built as a performance-critical piece of code since metrics are often a high-volume item.
-          # `#accept`, which is what takes in messages to send to the CW Metric Agent, puts messages into a thread-safe
+          # +#accept+, which is what takes in messages to send to the CW Metric Agent, puts messages into a thread-safe
           # queue. A separate thread is then picking up from that queue and sending the messages over a persistent
           # TCP connection to the agent.
           #
-          # **Creating a new EcsFargate sink will create a new thread and connection to the agent**.
+          # <b>Creating a new EcsFargate sink will create a new thread and connection to the agent.</b>
           # This sink is intended to be used sparingly.
           #
           # Messages that time out or can't be sent are put back at the end of the queue.
           # If a message is enqueued and the queue is full, the message is dropped and a warning is logged.
+          #
+          # If you use this sink, you *MUST* call <tt>metrics.set_property("log_group_name", "<value>")</tt>.
+          # The CW Agent will reject your messages if the log group name is not included.
           #
           # @param conn_str [String] A connection string, formatted like 'tcp://127.0.0.1:25888'
           # @param max_queue_size [Numeric] The number of messages to buffer in-memory.
@@ -39,7 +41,7 @@ module Aws
           # @param logger [Logger] A standard Ruby logger to propagate warnings and errors.
           #   Suggested to use Rails.logger.
           def initialize(conn_str: ENV.fetch(DEFAULT_ENV_VAR_NAME, nil),
-                         max_queue_size: 100_000,
+                         max_queue_size: 10_000,
                          conn_timeout_secs: 10,
                          write_timeout_secs: 10,
                          logger: nil)
@@ -143,8 +145,10 @@ module Aws
                   # Hopefully a transient issue, but the connection is gone. The sidecar may have died.
                   conn.close unless conn.nil? || conn.closed?
                   conn = nil
-                  # Throw in a small sleep so it doesn't hammer the connection trying to re-open
-                  sleep(0.1)
+                  # Throw in a sleep so it doesn't hammer the connection trying to re-open.
+                  # If the sleep is too short sockets may not be cleaned up fast enough by the OS,
+                  # resulting in Errno::EMFILE: Too many open files - socket(2)
+                  sleep(1)
                   # Unfortunately Ruby's thread-safe queue doesn't have a peek method.
                   # The message has to go to the tail
                   queue.push(message) unless queue.closed?
