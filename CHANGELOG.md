@@ -7,7 +7,7 @@ See this http://keepachangelog.com link for information on how we want this docu
 
 ### Added
 
-- A new sink now exists, `EcsFargate`! Today the sink assumes you're using the `awsvpc` network configuration for your containers.
+- Two new sinks now exists, `Tcp` and `Async`. The `Tcp` sink can EMF messages to any valid TCP endpoint, and `Async` can wrap any sink to ensure your program isn't impacted by writing to the network/disk/etc.
 - Included a new dependency, `tcp-client`. Originally a small hand-written TCP client was used but it proved unreliable and well outside the scope of this library.
 - Added the new `Units` class for easy reference to the accepted metric units.
 
