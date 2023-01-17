@@ -14,7 +14,6 @@ Pulled from these two projects using the [Embedded Metric Format Specification](
 However, unlike these projects, we differ in the following ways. Again, contributions are very much welcome if you want to see more or change this.
 
 * Initial focus on Lambda. A TCP sink has been added, but no UDP sink exists.
-* An async sink wrapper exists that allows messages to be queued and sent on a separate thread.
 * No default Dimensions or Configuration for:
   - `ServiceName`
   - `ServiceType`
@@ -58,15 +57,6 @@ Using the `Tcp` sink to write over a network:
 Aws::Embedded::Metrics.configure do |c|
   c.sink = Aws::Embedded::Metrics::Sinks::Tcp.new(conn_str: "tcp://localhost:25888",
                                                   logger: Rails.logger)
-end
-```
-
-Using the `Async` sink wrapper to incur no latency or errors on writes:
-```ruby
-Aws::Embedded::Metrics.configure do |c|
-  tcp_sink = Aws::Embedded::Metrics::Sinks::Tcp.new(conn_str: "tcp://localhost:25888",
-                                                    logger: Rails.logger)
-  c.sink = Aws::Embedded::Metrics::Sinks::Async.new(tcp_sink, logger: Rails.logger, max_queue_size: 1_000)
 end
 ```
 

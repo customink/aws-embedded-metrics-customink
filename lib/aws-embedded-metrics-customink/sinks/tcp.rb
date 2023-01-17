@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+gem 'tcp-client'
 require 'tcp-client'
 
 module Aws
