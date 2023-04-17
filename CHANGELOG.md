@@ -3,6 +3,14 @@
 
 See this http://keepachangelog.com link for information on how we want this documented formatted.
 
+## v0.8.0
+
+### Added
+
+- New TCP Sink. 
+- Support for `LogGroupName` and `LogStreamName`. 
+- New `Metrics::Units` constants.
+
 ## v0.7.0
 
 ### Added

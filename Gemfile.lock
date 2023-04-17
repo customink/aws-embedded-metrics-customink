@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    aws-embedded-metrics-customink (0.7.0)
+    aws-embedded-metrics-customink (0.8.0)
       concurrent-ruby
 
 GEM
