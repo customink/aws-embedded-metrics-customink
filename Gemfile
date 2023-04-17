@@ -8,4 +8,5 @@ gem 'rubocop'
 group :test do
   gem 'mocha'
   gem 'pry'
+  gem 'tcp-client'
 end

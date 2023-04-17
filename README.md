@@ -13,10 +13,8 @@ Pulled from these two projects using the [Embedded Metric Format Specification](
 
 However, unlike these projects, we differ in the following ways. Again, contributions are very much welcome if you want to see more or change this.
 
-* Initial focus on Lambda. No other sinks.
-* As such, no default Dimensions or Configuraiton for:
-  - `LogGroupName`
-  - `LogStreamName`
+* Initial focus on Lambda. A TCP sink has been added, but no UDP sink exists.
+* No default Dimensions or Configuration for:
   - `ServiceName`
   - `ServiceType`
 
@@ -39,6 +37,9 @@ Simple configuration:
 ```ruby
 Aws::Embedded::Metrics.configure do |c|
   c.namespace = 'MyApplication'
+  # Optional
+  c.log_group_name = 'MyLogGroup'
+  c.log_stream_name = 'MyLogStream-UniqueID' 
 end
 ```
 
@@ -47,6 +48,15 @@ Using the `Logger` sink to write to a log file:
 ```ruby
 Aws::Embedded::Metrics.configure do |c|
   c.sink = Aws::Embedded::Metrics::Sinks::Logger.new(Rails.logger)
+end
+```
+
+Using the `Tcp` sink to write over a network:
+
+```ruby
+Aws::Embedded::Metrics.configure do |c|
+  c.sink = Aws::Embedded::Metrics::Sinks::Tcp.new(conn_str: "tcp://localhost:25888",
+                                                  logger: Rails.logger)
 end
 ```
 

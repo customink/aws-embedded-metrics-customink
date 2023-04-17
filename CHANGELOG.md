@@ -3,6 +3,14 @@
 
 See this http://keepachangelog.com link for information on how we want this documented formatted.
 
+## v0.7.0
+
+### Added
+
+- A new `Tcp` sink is added. The `Tcp` sink can send EMF messages to any valid TCP endpoint.
+- `tcp-client` will be required at runtime if you use the `Tcp` sink. Originally a small hand-written TCP client was used but it proved unreliable and well outside the scope of this library.
+- Added the new `Units` class for easy reference to the accepted metric units.
+
 ## v0.6.0
 
 ### Fixed
